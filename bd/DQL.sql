@@ -1,0 +1,80 @@
+USE ProjetoHROADS;
+GO
+
+SELECT * FROM Personagem;
+SELECT * FROM Habilidade;
+SELECT * FROM Classe;
+SELECT * FROM TipoHabilidade;
+
+--8. Selecionar somente o nome das classes
+
+SELECT nomeClasse 'Nome das classes' FROM classe;
+GO
+
+--9. Selecionar todas as habilidades
+
+SELECT nomeHabilidade Habilidades FROM habilidade;
+GO
+
+--10. Realizar a contagem de quantas habilidades estão cadastradas
+
+SELECT COUNT(nomeHabilidade) FROM habilidade;
+GO
+
+--11. Selecionar somente os id’s das habilidades classificando-os por ordem crescente
+SELECT idClasse 'Id da classe' FROM classe
+ORDER BY idClasse asc;
+GO
+
+--13. Selecionar todas as habilidades e a quais tipos de habilidades elas fazem parte
+
+SELECT nomeHabilidade Habilidade, nomeTipoHabilidade 'Tipo da Habilidade' FROM habilidade
+LEFT JOIN TipoHabilidade
+ON TipoHabilidade.idTipoHabilidade = habilidade.idTipoHabilidade;
+GO
+
+--14. Selecionar todos os personagens e suas respectivas classes
+
+SELECT idPersonagem 'Id do personagem', nome 'Nome do personagem', nomeClasse 'Nome da Classe', capVida 'Capacidade de vida', capMana 'Capacidade de mana'
+FROM personagem
+LEFT JOIN classe
+ON classe.idClasse = personagem.idClasse;
+GO
+
+--15. Selecionar todos os personagens e as classes (mesmo que elas não tenham correspondência em personagens);
+
+SELECT nome Personagens, nomeClasse Classes FROM personagem
+FULL OUTER JOIN classe
+ON personagem.idClasse = classe.idClasse;
+GO
+
+--16. Selecionar todas as classes e suas respectivas habilidades
+
+SELECT nomeClasse AS [Nome da classe], nomeHabilidade AS 'Nome da habilidade'
+FROM Habilidade
+LEFT JOIN classe 
+ON Classe.idClasse = classe.idClasse
+LEFT JOIN Personagem
+on Habilidade.idHabilidade = habilidade.idHabilidade;
+GO
+
+
+--17. Selecionar todas as habilidades e suas classes (somente as que possuem correspondência)
+
+SELECT nomeClasse, nomeHabilidade 
+FROM Habilidade
+INNER JOIN classe
+ON classe.idClasse = Habilidade.idHabilidade
+INNER JOIN Personagem
+ON habilidade.idHabilidade = Habilidade.idHabilidade;
+GO
+
+--18. Selecionar todas as habilidades e suas classes (mesmo que elas não tenham correspondência).
+
+SELECT nomeHabilidade 'Nome da habilidade', nomeClasse [Nome da classe]
+FROM Habilidade h
+INNER JOIN Classe c
+on h.idHabilidade = h.idHabilidade
+INNER JOIN Personagem
+ON c.idClasse = c.idClasse;
+GO
